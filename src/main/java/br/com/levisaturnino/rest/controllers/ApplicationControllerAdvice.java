@@ -1,6 +1,7 @@
 package br.com.levisaturnino.rest.controllers;
 
 import br.com.levisaturnino.exception.BusinessRuleException;
+import br.com.levisaturnino.exception.OrderNotFoundException;
 import br.com.levisaturnino.rest.ApiErrors;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,5 +15,11 @@ public class ApplicationControllerAdvice {
     public ApiErrors handleBusinessRuleException(BusinessRuleException ex){
         String messageError = ex.getMessage();
         return new ApiErrors(messageError);
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrors handleBusinessRuleException(OrderNotFoundException ex){
+        return new ApiErrors(ex.getMessage());
     }
 }

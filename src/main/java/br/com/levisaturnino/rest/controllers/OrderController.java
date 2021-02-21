@@ -1,10 +1,12 @@
 package br.com.levisaturnino.rest.controllers;
 
+import br.com.levisaturnino.enums.StatusOrderEnum;
 import br.com.levisaturnino.model.entity.ItemOrder;
 import br.com.levisaturnino.model.entity.Order;
 import br.com.levisaturnino.rest.dto.InformationItemOrderDTO;
 import br.com.levisaturnino.rest.dto.InformationOrderDTO;
 import br.com.levisaturnino.rest.dto.OrderDTO;
+import br.com.levisaturnino.rest.dto.UpdateStatusOrderDTO;
 import br.com.levisaturnino.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,5 +74,10 @@ public class OrderController {
                         .quantity(item.getQuantity())
                         .build()
         ).collect(Collectors.toList());
+    }
+
+    @PatchMapping("{id}")
+    public void updateStatus(@PathVariable Integer id, @RequestBody  UpdateStatusOrderDTO updateStatusOrderDTO){
+        service.updateStatus(id, StatusOrderEnum.valueOf(updateStatusOrderDTO.getNewStatus()));
     }
 }

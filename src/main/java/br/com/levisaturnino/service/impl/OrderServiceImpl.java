@@ -1,7 +1,8 @@
 package br.com.levisaturnino.service.impl;
 
-import br.com.levisaturnino.enums.StatusPedidoEnum;
+import br.com.levisaturnino.enums.StatusOrderEnum;
 import br.com.levisaturnino.exception.BusinessRuleException;
+import br.com.levisaturnino.exception.OrderNotFoundException;
 import br.com.levisaturnino.model.entity.Client;
 import br.com.levisaturnino.model.entity.ItemOrder;
 import br.com.levisaturnino.model.entity.Order;
@@ -43,7 +44,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTotal(orderDTO.getTotal());
         order.setDataOrder(LocalDate.now());
         order.setClient(client);
-        order.setStatus(StatusPedidoEnum.REALIAZADO);
+        order.setStatus(StatusOrderEnum.REALIAZADO);
 
         List<ItemOrder> itemOrders =  convertItems(order, orderDTO.getItems());
 
@@ -59,6 +60,17 @@ public class OrderServiceImpl implements OrderService {
     public Optional<Order> getOrderComplete(Integer id) {
         Optional<Order> order = orderRepository.findByIdFetchOrders(id);
         return order;
+    }
+
+    @Override
+    public void updateStatus(Integer id, StatusOrderEnum statusPedidoEnum) {
+        orderRepository
+                .findById(id)
+                .map( order ->{
+                    order.setStatus(statusPedidoEnum);
+                    orderRepository.save(order);
+                    return order;
+                })  .orElseThrow(() -> new OrderNotFoundException());
     }
 
     private List<ItemOrder> convertItems(Order order,List<ItemOrderDTO> items){

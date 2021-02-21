@@ -1,6 +1,6 @@
 package br.com.levisaturnino.enums;
 
-public enum StatusPedidoEnum {
+public enum StatusOrderEnum {
     REALIAZADO,
     CANCELADO;
 }

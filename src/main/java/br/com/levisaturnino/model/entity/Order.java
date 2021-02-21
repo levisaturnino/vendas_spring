@@ -1,6 +1,6 @@
 package br.com.levisaturnino.model.entity;
 
-import br.com.levisaturnino.enums.StatusPedidoEnum;
+import br.com.levisaturnino.enums.StatusOrderEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,7 +35,7 @@ public class Order {
 
     @Enumerated(EnumType.STRING)
     @Column
-    private StatusPedidoEnum status;
+    private StatusOrderEnum status;
 
     @OneToMany( mappedBy = "order", fetch = FetchType.LAZY)
     private List<ItemOrder> orders;
