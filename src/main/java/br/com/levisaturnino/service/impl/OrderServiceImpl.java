@@ -1,5 +1,6 @@
 package br.com.levisaturnino.service.impl;
 
+import br.com.levisaturnino.enums.StatusPedidoEnum;
 import br.com.levisaturnino.exception.BusinessRuleException;
 import br.com.levisaturnino.model.entity.Client;
 import br.com.levisaturnino.model.entity.ItemOrder;
@@ -42,6 +43,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTotal(orderDTO.getTotal());
         order.setDataOrder(LocalDate.now());
         order.setClient(client);
+        order.setStatus(StatusPedidoEnum.REALIAZADO);
 
         List<ItemOrder> itemOrders =  convertItems(order, orderDTO.getItems());
 

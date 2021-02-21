@@ -1,5 +1,6 @@
 package br.com.levisaturnino.model.entity;
 
+import br.com.levisaturnino.enums.StatusPedidoEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +32,10 @@ public class Order {
 
     @Column(precision = 20, scale = 2)
     private BigDecimal total;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private StatusPedidoEnum status;
 
     @OneToMany( mappedBy = "order", fetch = FetchType.LAZY)
     private List<ItemOrder> orders;

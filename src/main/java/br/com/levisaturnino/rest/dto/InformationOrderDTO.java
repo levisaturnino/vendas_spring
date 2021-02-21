@@ -19,6 +19,8 @@ public class InformationOrderDTO {
     private String nameClient;
     private BigDecimal total;
     private String  dataOrder;
+    private String status;
+
     private List<InformationItemOrderDTO> items;
 
 }
