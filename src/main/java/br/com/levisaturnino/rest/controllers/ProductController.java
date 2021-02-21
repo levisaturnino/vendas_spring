@@ -48,7 +48,6 @@ public class ProductController {
     }
 
     @PutMapping("{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update( @PathVariable Integer id, @RequestBody Product cli ){
          repository
                 .findById(id)
@@ -71,4 +70,6 @@ public class ProductController {
 
         return list;
     }
+
+
 }
