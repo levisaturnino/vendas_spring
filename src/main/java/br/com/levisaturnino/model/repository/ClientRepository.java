@@ -28,4 +28,7 @@ public interface ClientRepository extends JpaRepository<Client,Integer> {
         List<Client> findByNameOrIdOrderById(String name,Integer id);
 
         boolean existsByName(String name);
+
+        @Query( "SELECT c FROM Client c left join fetch c.orders p WHERE c.id = :id" )
+        Client findClientFetch( @Param("id") Integer id );
 }

@@ -22,10 +22,10 @@ public class Order {
     @Column(name = "data_order")
     private LocalDate dataOrder;
 
-    @Column(length = 20, precision = 2)
+    @Column(precision = 20, scale = 2)
     private BigDecimal total;
 
-    @OneToMany( mappedBy = "order")
+    @OneToMany( mappedBy = "order", fetch = FetchType.LAZY)
     private Set<ItemOrder> orders;
 
     public Set<ItemOrder> getOrders() {
@@ -66,5 +66,14 @@ public class Order {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", dataOrder=" + dataOrder +
+                ", total=" + total +
+                '}';
     }
 }
