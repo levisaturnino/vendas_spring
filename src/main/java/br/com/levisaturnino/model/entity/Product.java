@@ -1,11 +1,14 @@
 package br.com.levisaturnino.model.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 public class Product {
 
     private Integer id;
+
     private String description;
+
     private BigDecimal price;
 
     public Integer getId() {

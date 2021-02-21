@@ -1,7 +1,9 @@
 package br.com.levisaturnino.model.entity;
 
-public class ItemOrder {
+import javax.persistence.*;
 
+
+public class ItemOrder {
     private Integer id;
     private Order order;
     private Product product;

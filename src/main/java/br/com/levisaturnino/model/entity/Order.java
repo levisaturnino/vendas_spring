@@ -1,5 +1,6 @@
 package br.com.levisaturnino.model.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -8,6 +9,7 @@ public class Order {
     private Integer id;
     private Client client;
     private LocalDate dataOrder;
+
     private BigDecimal total;
 
     public Integer getId() {

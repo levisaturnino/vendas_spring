@@ -1,8 +1,15 @@
 package br.com.levisaturnino.model.entity;
 
+import javax.persistence.*;
+
+@Entity
+@Table
 public class Client {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    @Column(length = 100)
     private String name;
 
     public Client() {
