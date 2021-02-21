@@ -3,7 +3,10 @@ package br.com.levisaturnino.service;
 import br.com.levisaturnino.model.entity.Order;
 import br.com.levisaturnino.rest.dto.OrderDTO;
 
-public interface OrderService {
+import java.util.Optional;
 
+public interface OrderService {
     Order save(OrderDTO orderDTO);
+
+    Optional<Order> getOrderComplete(Integer id);
 }

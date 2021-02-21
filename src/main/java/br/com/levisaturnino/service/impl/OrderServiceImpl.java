@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new BusinessRuleException("Código de cliente inválido."));
 
         Order order = new Order();
-        order.setTotal(order.getTotal());
+        order.setTotal(orderDTO.getTotal());
         order.setDataOrder(LocalDate.now());
         order.setClient(client);
 
@@ -49,6 +50,12 @@ public class OrderServiceImpl implements OrderService {
 
         order.setOrders(itemOrders);
 
+        return order;
+    }
+
+    @Override
+    public Optional<Order> getOrderComplete(Integer id) {
+        Optional<Order> order = orderRepository.findByIdFetchOrders(id);
         return order;
     }
 
