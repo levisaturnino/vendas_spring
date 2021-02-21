@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class VendasApplication {
 
@@ -17,6 +19,11 @@ public class VendasApplication {
             Client client = new Client();
             client.setName("Levi Saturnino");
             clientRepository.save(client);
+
+            clientRepository.save(new Client("Saturnino"));
+
+            List<Client> clients = clientRepository.getAll();
+            clients.forEach(System.out::println);
         };
     }
 
