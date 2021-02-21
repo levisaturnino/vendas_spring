@@ -27,7 +27,7 @@ public class VendasApplication {
 
             clients.forEach( cli  ->{
                 cli.setName(cli.getName() + " update.");
-                clientRepository.update(cli);
+               // clientRepository.update(cli);
             });
 
             System.out.println("Init find client");

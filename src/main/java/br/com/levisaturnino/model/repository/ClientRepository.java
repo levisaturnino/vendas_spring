@@ -1,55 +1,30 @@
 package br.com.levisaturnino.model.repository;
 
 import br.com.levisaturnino.model.entity.Client;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
-public class ClientRepository {
+public interface ClientRepository extends JpaRepository<Client,Integer> {
 
-    @Autowired
-    private EntityManager entityManager;
+        @Query(value = "SELECT * FROM Client",nativeQuery = true)
+        List<Client> getAll();
 
-    @Transactional
-    public Client save(Client client){
-        entityManager.persist(client);
-        return client;
-    }
+        @Query(value = "SELECT * FROM Client WHERE name like '%:name%'",nativeQuery = true)
+        List<Client> findByName(String name);
 
-    @Transactional
-    public Client update(Client client){
-        entityManager.merge(client);
-        return client;
-    }
-    @Transactional
-    public void delete(Integer id){
-        Client client  =  entityManager.find(Client.class,id);
-        delete(client);
-    }
+        @Query(value = "UPDATE client SET name = :name WHERE id = :id",nativeQuery = true)
+        Client update(@Param("name") String name,@Param("id") String id);
 
-    @Transactional
-    public void delete(Client client){
-        if(!entityManager.contains(client)){
-            client = entityManager.merge(client);
-        }
-        entityManager.remove(client);
-    }
+        @Query(value = "DELETE FROM client name = :name",nativeQuery = true)
+        @Modifying
+        Client deleteByName(@Param("name") String name);
 
-    @Transactional(readOnly = true)
-    public List<Client> findByName(String name){
-        String jpql = "SELECT c from Client c  where c.name like :name";
-        TypedQuery<Client> query = entityManager.createQuery(jpql,Client.class);
-        query.setParameter("name","%"+name+"%");
-        return query.getResultList();
-    }
+        List<Client> findByNameLike(String name);
+        List<Client> findByNameOrIdOrderById(String name,Integer id);
 
-    @Transactional(readOnly = true)
-    public List<Client> getAll(){
-        return entityManager.createQuery("FROM Client",Client.class).getResultList();
-    }
+        boolean existsByName(String name);
 }
