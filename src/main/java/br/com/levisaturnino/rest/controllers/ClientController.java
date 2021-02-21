@@ -13,7 +13,6 @@ import java.util.Optional;
 @RequestMapping("api/clients")
 public class ClientController {
 
-
     @Autowired
     private ClientRepository repository;
 
@@ -47,6 +46,30 @@ public class ClientController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity update( @PathVariable Integer id, @RequestBody Client cli ){
+        Optional<Client>  client = repository.findById(id);
+        if(client.isPresent()){
+            cli.setId(client.get().getId());
+            repository.save(cli);
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/update/{id}")
+    @ResponseBody
+    public ResponseEntity update2( @PathVariable Integer id, @RequestBody Client cli ){
+       return repository
+               .findById(id)
+               .map( client ->{
+                       cli.setId(client.getId());
+                       repository.save(cli);
+                       return ResponseEntity.noContent().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @RequestMapping(value = "/hello/{name}",
