@@ -3,14 +3,38 @@ package br.com.levisaturnino.model.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Set;
 
+@Entity
+@Table(name = "orders")
 public class Order {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
     private Client client;
+
+    @Column(name = "data_order")
     private LocalDate dataOrder;
 
+    @Column(length = 20, precision = 2)
     private BigDecimal total;
+
+    @OneToMany( mappedBy = "order")
+    private Set<ItemOrder> orders;
+
+    public Set<ItemOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<ItemOrder> orders) {
+        this.orders = orders;
+    }
 
     public Integer getId() {
         return id;

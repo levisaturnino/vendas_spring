@@ -1,6 +1,7 @@
 package br.com.levisaturnino.model.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table
@@ -8,9 +9,13 @@ public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Integer id;
     @Column(length = 100)
     private String name;
+
+    @OneToMany( mappedBy = "client")
+    private Set<Order> orders;
 
     public Client() {
     }
@@ -38,6 +43,14 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<Order> orders) {
+        this.orders = orders;
     }
 
     @Override

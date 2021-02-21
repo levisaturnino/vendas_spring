@@ -34,7 +34,6 @@ public class VendasApplication {
             clientRepository.findByName("Satu").forEach(System.out::println);
             System.out.println("End find client");
 
-
             System.out.println("Delete client");
             clients.forEach( cli  ->{
                 clientRepository.delete(cli);
@@ -45,7 +44,6 @@ public class VendasApplication {
                 System.out.println("No customers found.");
             }else{
                 clients.forEach(System.out::println);
-
             }
         };
     }
