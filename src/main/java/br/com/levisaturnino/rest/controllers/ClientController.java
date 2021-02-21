@@ -3,10 +3,13 @@ package br.com.levisaturnino.rest.controllers;
 import br.com.levisaturnino.model.entity.Client;
 import br.com.levisaturnino.model.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -58,6 +61,21 @@ public class ClientController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+
+    @GetMapping
+    @ResponseBody
+    public ResponseEntity find( Client filtro ){
+        ExampleMatcher matcher = ExampleMatcher
+                                            .matching()
+                                            .withIgnoreCase()
+                                            .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example example = Example.of(filtro, matcher);
+        List<Client> list = repository.findAll(example);
+
+        return ResponseEntity.ok(list);
     }
 
     @PutMapping("/update/{id}")
