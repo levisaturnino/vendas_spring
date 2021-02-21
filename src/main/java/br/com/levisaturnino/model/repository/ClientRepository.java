@@ -13,8 +13,8 @@ public interface ClientRepository extends JpaRepository<Client,Integer> {
         @Query(value = "SELECT * FROM Client",nativeQuery = true)
         List<Client> getAll();
 
-        @Query(value = "SELECT * FROM Client WHERE name like '%:name%'",nativeQuery = true)
-        List<Client> findByName(String name);
+        @Query(value = "SELECT c FROM Client c WHERE c.name like '%:name%'")
+        List<Client> findByName(@Param("name") String name);
 
         @Query(value = "UPDATE client SET name = :name WHERE id = :id",nativeQuery = true)
         Client update(@Param("name") String name,@Param("id") String id);
@@ -23,6 +23,7 @@ public interface ClientRepository extends JpaRepository<Client,Integer> {
         @Modifying
         Client deleteByName(@Param("name") String name);
 
+        // QueryMethod
         List<Client> findByNameLike(String name);
         List<Client> findByNameOrIdOrderById(String name,Integer id);
 
