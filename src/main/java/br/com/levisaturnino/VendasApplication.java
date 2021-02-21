@@ -24,6 +24,29 @@ public class VendasApplication {
 
             List<Client> clients = clientRepository.getAll();
             clients.forEach(System.out::println);
+
+            clients.forEach( cli  ->{
+                cli.setName(cli.getName() + " update.");
+                clientRepository.update(cli);
+            });
+
+            System.out.println("Init find client");
+            clientRepository.findByName("Satu").forEach(System.out::println);
+            System.out.println("End find client");
+
+
+            System.out.println("Delete client");
+            clients.forEach( cli  ->{
+                clientRepository.delete(cli);
+            });
+
+            clients = clientRepository.getAll();
+            if(clients.isEmpty()){
+                System.out.println("No customers found.");
+            }else{
+                clients.forEach(System.out::println);
+
+            }
         };
     }
 
