@@ -31,6 +31,24 @@ public class ClientController {
        return ResponseEntity.notFound().build();
     }
 
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity save( @RequestBody Client cli ){
+        Client  client = repository.save(cli);
+        return ResponseEntity.ok(client);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public ResponseEntity delete( @PathVariable Integer id ){
+        Optional<Client>  client = repository.findById(id);
+        if(client.isPresent()){
+            repository.delete(client.get());
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
     @RequestMapping(value = "/hello/{name}",
             method = RequestMethod.POST,
             consumes = {"application/json","application/xml"},

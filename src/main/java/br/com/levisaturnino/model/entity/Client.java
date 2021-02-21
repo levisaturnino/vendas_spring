@@ -1,6 +1,11 @@
 package br.com.levisaturnino.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.aspectj.weaver.ast.Or;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -14,9 +19,10 @@ public class Client {
     @Column(length = 100)
     private String name;
 
+    @JsonIgnore
     @OneToMany( mappedBy = "client")
-    private Set<Order> orders;
-
+    private Set<Order> orders = new HashSet<Order>();
+;
     public Client() {
     }
 
