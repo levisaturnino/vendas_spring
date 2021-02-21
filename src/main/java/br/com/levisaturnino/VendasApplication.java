@@ -17,6 +17,14 @@ import java.util.List;
 @SpringBootApplication
 public class VendasApplication {
 
+    @Bean
+    public CommandLineRunner commandLineRunner(@Autowired ClientRepository clientRepository){
+        return args -> {
+            Client client = new Client("Levi");
+            clientRepository.save(client);
+        };
+    }
+
     public static void main(String[] args) {
         SpringApplication.run(VendasApplication.class,args);
     }
