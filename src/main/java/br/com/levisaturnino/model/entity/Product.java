@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 @Data
 @Builder
@@ -21,8 +23,10 @@ public class Product {
     private Integer id;
 
     @Column
+    @NotEmpty(message = "Campo descrição não pode ser vázio")
     private String description;
 
     @Column
+    @NotNull(message = "Campo preço não pode ser nulo")
     private BigDecimal price;
 }

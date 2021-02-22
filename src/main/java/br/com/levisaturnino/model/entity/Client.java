@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.HashSet;
 import java.util.Set;
 @Data
@@ -23,15 +25,17 @@ public class Client {
     private Integer id;
 
     @Column(length = 100)
+    @NotEmpty(message = "Nome é obrigatório")
     private String name;
 
     @Column(length = 14)
+    @NotEmpty(message = "CPF é obrigatório")
+    @CPF(message = "Informe o CPF válido")
     private String cpf;
 
     @JsonIgnore
     @OneToMany( mappedBy = "client")
     private Set<Order> orders = new HashSet<Order>();
-
 
     public Client(Integer id, String name) {
         this.id = id;

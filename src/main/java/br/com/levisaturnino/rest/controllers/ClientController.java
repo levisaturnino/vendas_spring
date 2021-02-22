@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
 import java.util.List;
 @RestController
 @RequestMapping("api/clients")
@@ -30,7 +31,7 @@ public class ClientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client save( @RequestBody Client cli ){
+    public Client save( @RequestBody @Valid Client cli ){
         return repository.save(cli);
     }
 
@@ -53,7 +54,7 @@ public class ClientController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update( @PathVariable Integer id, @RequestBody Client cli ){
+    public void update( @PathVariable Integer id, @RequestBody @Valid Client cli ){
          repository
                 .findById(id)
                 .map( client ->{
