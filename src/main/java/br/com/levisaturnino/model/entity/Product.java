@@ -23,10 +23,10 @@ public class Product {
     private Integer id;
 
     @Column
-    @NotEmpty(message = "Campo descrição não pode ser vázio")
+    @NotEmpty(message = "{campo.descricao.obrigatorio}")
     private String description;
 
     @Column
-    @NotNull(message = "Campo preço não pode ser nulo")
+    @NotNull(message = "{campo.preco.obrigatorio}")
     private BigDecimal price;
 }
