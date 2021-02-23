@@ -22,11 +22,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                     .passwordEncoder(passwordEncoder())
                     .withUser("levi")
                     .password(passwordEncoder().encode("123"))
-                    .roles("USER");
+                    .roles("USER","ADMIN");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+       http.
+               csrf().disable()
+               .authorizeRequests()
+               .antMatchers("/api/clients/**")
+               .hasAnyRole("USER","ADMIN")
+               .antMatchers("/api/products/**")
+               .hasRole("ADMIN")
+               .antMatchers("/api/orders/**")
+               .hasRole("USER")
+       .and().formLogin();
     }
 }
