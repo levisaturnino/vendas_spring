@@ -3,6 +3,7 @@ package br.com.levisaturnino.config;
 import br.com.levisaturnino.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -44,6 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                .hasRole("ADMIN")
                .antMatchers("/api/orders/**")
                .hasAnyRole("USER","ADMIN")
+               .antMatchers(HttpMethod.POST,"/api/users/**")
+               .permitAll()
+               .anyRequest().authenticated()
             .and()
                .httpBasic();
     }
