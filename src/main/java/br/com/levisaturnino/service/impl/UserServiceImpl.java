@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserDetailsService {
 
     @Transactional
     public br.com.levisaturnino.model.entity.User save( br.com.levisaturnino.model.entity.User user ){
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
