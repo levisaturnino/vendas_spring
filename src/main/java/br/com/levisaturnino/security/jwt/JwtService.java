@@ -1,7 +1,9 @@
-package br.com.levisaturnino;
+package br.com.levisaturnino.security.jwt;
 
 
 import br.com.levisaturnino.model.entity.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,7 +23,7 @@ public class JwtService {
     private String chaveAssinatura;
 
     public String gerarToken( User usuario ){
-        long expString = Long.valueOf(expiracao);
+        long expString = Long.parseLong(expiracao);
         LocalDateTime dataHoraExpiracao = LocalDateTime.now().plusMinutes(expString);
         Instant instant = dataHoraExpiracao.atZone(ZoneId.systemDefault()).toInstant();
         Date data = Date.from(instant);
@@ -32,5 +34,28 @@ public class JwtService {
                 .setExpiration(data)
                 .signWith( SignatureAlgorithm.HS512, chaveAssinatura )
                 .compact();
+    }
+
+    public Claims getClaims(String token) throws ExpiredJwtException {
+        return Jwts
+                .parser()
+                .setSigningKey(chaveAssinatura)
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public boolean tokenValid (String token){
+        try{
+           Claims claims =  getClaims(token);
+            Date dataExperition = claims.getExpiration();
+            LocalDateTime localDateTime =  dataExperition.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+            return !LocalDateTime.now().isAfter(localDateTime);
+        }catch (Exception ex){
+            return false;
+        }
+    }
+
+    public String getLoginUser(String token) throws ExpiredJwtException{
+        return  getClaims(token).getSubject();
     }
 }
